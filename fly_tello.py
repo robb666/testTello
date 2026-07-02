@@ -1,11 +1,12 @@
 import time, queue, socket, sqlite3, datetime, threading  
 
+
 class Tello:
     def __init__(self):
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM) 
-        self.socket.bind(('', 8889))   
+        self.socket.bind(('', 8889))
         self.db_queue  = queue.Queue() # cache flight data
-        self.cmd_queue = queue.Queue() 
+        self.cmd_queue = queue.Queue()
         self.cmd_event = threading.Event() 
         self.MAX_TIME_OUT = 15         # It must be longer than 10 sec, give time to "take off" command.   
         self.MAX_RETRY = 2
@@ -13,7 +14,7 @@ class Tello:
         threading.Thread(target=self.flight_logger, kwargs={"debug":True}, daemon=True).start() 
         threading.Thread(target=self.receiver     , kwargs={"debug":True}, daemon=True).start()
         threading.Thread(target=self.sender       , kwargs={"debug":True}, daemon=True).start()   
-        threading.Thread(target=self.update_state , daemon=True).start()   
+        threading.Thread(target=self.update_state , daemon=True).start()
     
     def command(self, cmd):
         self.cmd_queue.put(cmd)  
