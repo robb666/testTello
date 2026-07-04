@@ -19,9 +19,10 @@ def stream():
     def generate():
         while True:
             # Pobieranie najnowszej klatki prosto z drona
-            frame = tello.get_frame_read().frame
+            frame_bgr = tello.get_frame_read().frame
+            frame_rgb = cv2.cvtColor(frame_bgr, cv2.COLOR_BGR2RGB)
             # Kodowanie do JPEG
-            ret, jpeg = cv2.imencode('.jpg', frame)
+            ret, jpeg = cv2.imencode('.jpg', frame_rgb)
             if not ret:
                 continue
 
@@ -67,7 +68,7 @@ if __name__ == '__main__':
 
         print("Wykonuję kwadrat...")
         for _ in range(4):
-            tello.move_forward(50)
+            tello.move_forward(70)
             tello.rotate_clockwise(90)
 
     except Exception as e:
