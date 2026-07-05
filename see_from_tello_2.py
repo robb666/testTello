@@ -68,8 +68,9 @@ if __name__ == '__main__':
 
         print("Wykonuję kwadrat...")
         for _ in range(4):
-            tello.move_forward(70)
+            tello.move_forward(30)
             tello.rotate_clockwise(90)
+            # tello.flip_forward()
 
     except Exception as e:
         print(f"Błąd podczas lotu: {e}")
